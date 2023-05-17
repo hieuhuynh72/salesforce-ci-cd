@@ -1,0 +1,35 @@
+<apex:page Controller="SearchAccountsAndContactsController">
+    <apex:pageBlock title="Search Accounts and Contacts">
+        <apex:form >
+            <apex:inputText value="{! searchKeyInput}" label="Search key"/>
+            <apex:commandButton value="Search" action="{! search}"/>
+            <br/><br/>
+            <apex:pageBlock title="Search Result">
+                <apex:pageBlockTable value="{! results}" var="rs">
+                    <apex:column headerValue="Record Name" value="{! rs.name}"/>
+                    <apex:column headerValue="Record Type" value="{! rs.type}"/>
+                    <apex:column headerValue="Counter" value="{! rs.counter}" styleClass="{! rs.id}" />
+                    <apex:column headerValue="Click to update counter">
+                        <a href="javascript:void(0)" onclick="updateCounter('{! rs.id}')">Increment Counter</a>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:form>
+    </apex:pageBlock>
+    
+    <script type="text/javascript">
+        function updateCounter(id) {
+            Visualforce.remoting.Manager.invokeAction(
+                '{! $RemoteAction.SearchAccountsAndContactsController.updateCounter}',
+                id,
+                function(result, event){
+                    if (event.status) {
+                        document.getElementsByClassName(id)[0].innerHTML = result;
+                    } else {
+                        console.log(event.message);
+                    }
+                }, 
+            );
+        }
+    </script>
+</apex:page>

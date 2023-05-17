@@ -1,0 +1,66 @@
+<apex:page controller="skedJobSchedulingCtrl" sidebar="false" standardstylesheets="false" showheader="false" doctype="html-5.0">
+
+  <head>
+    <meta charset="UTF-8" />
+    <title>OJ Insulation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    
+    <link rel="stylesheet" href="{!URLFOR($Resource.skedCommonBookingGrid_Assets, '/slds/styles/salesforce-lightning-design-system-vf.min.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.skedCommonBookingGrid_Assets, '/jquery-ui-custom/jquery-ui.min.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.skedCommonBookingGrid_Assets, '/jquery-ui-custom/jquery-ui.theme.min.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.skedCommonBookingGrid_Assets, '/jquery-time-picker/jquery.timepicker.css')}" />
+
+    <link rel="stylesheet" href="{!URLFOR($Resource.skedCommonBookingGrid_Dist, '/styles/event-details.css')}" />
+    
+  </head>
+
+  <body style="margin: 0; padding: 0;">
+    <!-- app: learning-center-capacity -->
+    <div ng-app="app.eventDetails" class="sked-slds ng-cloak">
+      <!-- main component -->
+      <event-list class="sked-modal-container" allow-posting-message="true"></event-list>
+    </div>
+
+    <!-- jquery -->
+    <script src="{!URLFOR($Resource.skedCommonBookingGrid_Assets, '/jquery/jquery-3.1.1.min.js')}"></script>
+    <script src="{!URLFOR($Resource.skedCommonBookingGrid_Assets, '/jquery-ui-custom/jquery-ui.min.js')}"></script>
+    <!-- angularjs -->
+    <script src="{!URLFOR($Resource.skedCommonBookingGrid_Assets, '/angularjs/angular.min.js')}"></script>
+    <script src="{!URLFOR($Resource.skedCommonBookingGrid_Assets, '/angularjs/angular-sanitize.min.js')}"></script>
+    <script src="{!URLFOR($Resource.skedCommonBookingGrid_Assets, '/ng-jquery-ui-date-picker.js')}"></script>
+    <!-- clickoutside -->
+    <script src="{!URLFOR($Resource.skedCommonBookingGrid_Assets, '/clickoutside.directive.js')}"></script>
+    <!-- jquery time picker -->
+    <script src="{!URLFOR($Resource.skedCommonBookingGrid_Assets, '/jquery-time-picker/jquery.timepicker.min.js')}"></script>
+    <!-- lodash -->
+    <script src="{!URLFOR($Resource.skedCommonBookingGrid_Assets, '/lodash.min.js')}"></script>
+    <!-- moment -->
+    <script src="{!URLFOR($Resource.skedCommonBookingGrid_Assets, '/momentjs/moment.min.js')}"></script>
+    <script src="{!URLFOR($Resource.skedCommonBookingGrid_Assets, '/momentjs/moment-timezone-with-data.js')}"></script>
+    <!-- app -->
+    <script src="{!URLFOR($Resource.skedCommonBookingGrid_Dist, '/scripts/event-details.js')}"></script>
+    <!-- endbuild -->
+
+    <!-- app: project-details bootstrap -->
+    <script>
+      (function (angular, apiController) {
+        angular.module('skedApp.core')
+        .config([
+          'apiProvider',
+          'envProvider',
+          function (apiProvider, envProvider) {
+            apiProvider.setController(apiController);
+            apiProvider.setRemotingConfiguration({
+              escape: false
+            });
+            envProvider.setVariables({
+              RESOURCE_PATH: "{!URLFOR($Resource.skedCommonBookingGrid_Assets, '/')}"
+            });
+          }
+        ]);
+
+      })(angular, skedJobSchedulingCtrl);
+    </script>
+
+  </body>
+  </apex:page>
