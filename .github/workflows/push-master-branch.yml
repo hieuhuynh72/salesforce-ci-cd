@@ -3,10 +3,10 @@ name: Deploy master branch to production org
 
 # Definition when the workflow should run
 on:
-    # workflow_dispatch:
-    #   inputs:
-    #     session_id:
-    #       required: true
+    workflow_dispatch:
+      inputs:
+        session_id:
+          required: true
     push:
       branches: [ master ]
       paths:
