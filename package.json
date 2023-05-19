@@ -1,5 +1,5 @@
 {
-  "overrides": {
+  "resolutions": {
     "graceful-fs": "^4.2.11"
   },
   "name": "salesforce-app",
@@ -7,6 +7,7 @@
   "version": "1.0.0",
   "description": "Salesforce App",
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "lint": "eslint **/{aura,lwc}/**",
     "test": "npm run test:unit",
     "test:unit": "sfdx-lwc-jest",
