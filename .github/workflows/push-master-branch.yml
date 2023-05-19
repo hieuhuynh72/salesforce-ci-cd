@@ -51,12 +51,21 @@ jobs:
                   mkdir changed-sources
                   sfdx sgd:source:delta --to "HEAD" --from "HEAD^" --output changed-sources/ --generate-delta --source force-app/
 
+            # Push params to the .env deploy org
+            - name: 'Push params to the .env to deploy org'
+              run: | 
+                echo "SF_BRANCH=$CI_COMMIT_BRANCH" >> $GITHUB_ENV
+
             # Authenticate to org
-            - name: 'Authenticate to Production Org'
-              run: sfdx auth:sfdxurl:store -f ./SFDX_PRODUCTION_URL.txt -s -a production
+            # - name: 'Authenticate to Production Org'
+            #   run: sfdx auth:sfdxurl:store -f ./SFDX_PRODUCTION_URL.txt -s -a production
 
             - name: 'Deploy the entire branch to Production org'
-              run: sfdx force:source:deploy -p force-app --testlevel RunLocalTests --json
+              # run: sfdx force:source:deploy -p force-app --testlevel RunLocalTests --json
+              run: |
+                npm run deploy
 
             - name: 'Deploy destructive changes (if any) to Production org'
-              run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings 
+              # run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings
+              run: |
+                npm run destroy
