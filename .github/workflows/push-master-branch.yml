@@ -63,9 +63,9 @@ jobs:
             - name: 'Deploy the entire branch to Production org'
               # run: sfdx force:source:deploy -p force-app --testlevel RunLocalTests --json
               run: |
-                npm run deploy
+                node ./build/deploy
 
             - name: 'Deploy destructive changes (if any) to Production org'
               # run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings
               run: |
-                npm run destroy
+                node ./build/destroy
