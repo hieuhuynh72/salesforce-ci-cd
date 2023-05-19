@@ -22,7 +22,7 @@ jobs:
             # Now we install nodejs in the VM, and specify version 10.16
             - uses: actions/setup-node@v3
               with:
-                node-version: '10.16'
+                node-version: '10'
             # Install Salesforce CLI
             - name: 'Install Salesforce CLI'
               run: |
