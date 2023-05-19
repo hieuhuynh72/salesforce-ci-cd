@@ -19,6 +19,10 @@ jobs:
         runs-on: ubuntu-latest
         if: ${{ github.actor != 'dependabot[bot]' }}
         steps:
+            # Now we install nodejs in the VM, and specify version 10.16
+            - uses: actions/setup-node@v3
+              with:
+                node-version: '10.16'
             # Install Salesforce CLI
             - name: 'Install Salesforce CLI'
               run: |
