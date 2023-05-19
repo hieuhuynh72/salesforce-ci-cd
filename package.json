@@ -1,4 +1,7 @@
 {
+  "overrides": {
+    "graceful-fs": "^4.2.11"
+  },
   "name": "salesforce-app",
   "private": true,
   "version": "1.0.0",
