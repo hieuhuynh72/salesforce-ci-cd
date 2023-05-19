@@ -3,10 +3,10 @@ name: Deploy master branch to production org
 
 # Definition when the workflow should run
 on:
-    workflow_dispatch:
-      inputs:
-        session_id:
-          required: true
+    # workflow_dispatch:
+    #   inputs:
+    #     session_id:
+    #       required: true
     push:
       branches: [ master ]
       paths:
@@ -41,10 +41,10 @@ jobs:
                 fetch-depth: 0
 
             # Store secret for production org
-            - name: 'Populate auth file with SFDX_URL secret of the integration and staging orgs'
-              shell: bash
-              run: |
-                  echo ${{ github.event.inputs.session_id}} > ./SFDX_PRODUCTION_URL.txt
+            # - name: 'Populate auth file with SFDX_URL secret of the integration and staging orgs'
+            #   shell: bash
+            #   run: |
+            #       echo ${{ github.event.inputs.session_id}} > ./SFDX_PRODUCTION_URL.txt
 
             - name: 'Create delta packages for new, modified or deleted metadata'
               run: | 
