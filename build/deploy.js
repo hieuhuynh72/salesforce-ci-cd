@@ -28,22 +28,6 @@ var options = {
     verbose : true
 };
 
-var logger = (function (fs) {
-    var buffer = '';
-    return {
-        log: log,
-        flush: flush
-    };
-    function log(val) {
-        buffer += (val + '\n');
-    }
-    function flush() {
-        var logFile = path.resolve((process.env.SALESFORCE_ARTIFACTS || '.') + '/DeployStatistics.log');
-        fs.appendFileSync(logFile, buffer, 'utf8');
-        buffer = '';
-    }
-} (fs));
-
 //copy the package-xml to artifacts
 fs.stat('./src/package.xml', function(err, stat) {
     if(err === null) {
@@ -102,9 +86,6 @@ hasDestructivePhase()
     return tools.deployFromDirectory('./force-app', options);
 })
 .then((deployResult) => {
-    tools.reportDeployResult(deployResult, logger, options.verbose);
-    logger.flush();
-    
     console.log('Deployment Id: ' + deployResult.id);
     
     if (!deployResult.success || deployResult.numberTestErrors > 0 || deployResult.numberComponentErrors > 0) {
