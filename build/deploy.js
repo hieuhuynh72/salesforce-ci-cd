@@ -125,4 +125,4 @@ console.info('LoginUrl: ', options.loginUrl);
 //     process.exit(1);
 // });
 console.info('Start to deploy...');
-tools.deployFromDirectory('./force-app', options);
+tools.deployFromDirectory('../force-app', options);
