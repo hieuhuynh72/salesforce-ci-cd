@@ -52,9 +52,9 @@ jobs:
                   sfdx sgd:source:delta --to "HEAD" --from "HEAD^" --output changed-sources/ --generate-delta --source force-app/
 
             # Push params to the .env deploy org
-            # - name: 'Push params to the .env to deploy org'
-            #   run: | 
-            #     echo "SF_BRANCH=$CI_COMMIT_BRANCH" >> $GITHUB_ENV
+            - name: 'Push params to the .env to deploy org'
+              run: | 
+                echo "SF_BRANCH=$CI_COMMIT_BRANCH" >> $GITHUB_ENV
 
             # Authenticate to org
             # - name: 'Authenticate to Production Org'
