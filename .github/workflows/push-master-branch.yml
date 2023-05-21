@@ -19,10 +19,6 @@ jobs:
         runs-on: ubuntu-latest
         if: ${{ github.actor != 'dependabot[bot]' }}
         steps:
-            # Now we install nodejs in the VM, and specify version 10.16
-            - uses: actions/setup-node@v3
-              with:
-                node-version: '10'
             # Install Salesforce CLI
             - name: 'Install Salesforce CLI'
               run: |
@@ -45,10 +41,10 @@ jobs:
                 fetch-depth: 0
 
             # Store secret for production org
-            # - name: 'Populate auth file with SFDX_URL secret of the integration and staging orgs'
-            #   shell: bash
-            #   run: |
-            #       echo ${{ github.event.inputs.session_id}} > ./SFDX_PRODUCTION_URL.txt
+            - name: 'Populate auth file with SFDX_URL secret of the integration and staging orgs'
+              shell: bash
+              run: |
+                echo ${{ env.SECRET_KEY }} > ./SFDX_PRODUCTION_URL.txt
 
             - name: 'Create delta packages for new, modified or deleted metadata'
               run: | 
@@ -77,17 +73,6 @@ jobs:
             #   # run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings
             #   run: |
             #     node ./build/destroy
-
-            # Store secret for production org
-            - name: 'Populate auth file with SFDX_URL secret of the integration and staging orgs'
-              shell: bash
-              run: |
-                  echo ${{ env.SECRET_KEY }} > ./SFDX_PRODUCTION_URL.txt
-
-            - name: 'Create delta packages for new, modified or deleted metadata'
-              run: | 
-                  mkdir changed-sources
-                  sfdx sgd:source:delta --to "HEAD" --from "HEAD^" --output changed-sources/ --generate-delta --source force-app/
 
             # Authenticate to org
             - name: 'Authenticate to Production Org'
