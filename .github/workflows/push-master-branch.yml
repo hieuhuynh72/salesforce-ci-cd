@@ -41,10 +41,10 @@ jobs:
                 fetch-depth: 0
 
             # Store secret for production org
-            - name: 'Populate auth file with SFDX_URL secret of the integration and staging orgs'
-              shell: bash
-              run: |
-                echo ${{ env.SECRET_KEY }} > ./SFDX_PRODUCTION_URL.txt
+            # - name: 'Populate auth file with SFDX_URL secret of the integration and staging orgs'
+            #   shell: bash
+            #   run: |
+            #     echo ${{ env.SECRET_KEY }} > ./SFDX_PRODUCTION_URL.txt
 
             - name: 'Create delta packages for new, modified or deleted metadata'
               run: | 
@@ -60,26 +60,30 @@ jobs:
             # - name: 'Authenticate to Production Org'
             #   run: sfdx auth:sfdxurl:store -f ./SFDX_PRODUCTION_URL.txt -s -a production
 
-            # - name: 'Install npm'
-            #   run: |
-            #     npm install
+            - uses: actions/setup-node@v3
+              with:
+                node-version: '10'
 
-            # - name: 'Deploy the entire branch to Production org'
-            #   # run: sfdx force:source:deploy -p force-app --testlevel RunLocalTests --json
-            #   run: |
-            #     node ./build/deploy
-
-            # - name: 'Deploy destructive changes (if any) to Production org'
-            #   # run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings
-            #   run: |
-            #     node ./build/destroy
-
-            # Authenticate to org
-            - name: 'Authenticate to Production Org'
-              run: sfdx auth:sfdxurl:store -f ./SFDX_PRODUCTION_URL.txt -s -a production
+            - name: 'Install npm'
+              run: |
+                npm install
 
             - name: 'Deploy the entire branch to Production org'
-              run: sfdx force:source:deploy -p force-app --testlevel RunLocalTests --json
+              # run: sfdx force:source:deploy -p force-app --testlevel RunLocalTests --json
+              run: |
+                node ./build/deploy
 
             - name: 'Deploy destructive changes (if any) to Production org'
-              run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings 
+              # run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings
+              run: |
+                node ./build/destroy
+
+            # Authenticate to org
+            # - name: 'Authenticate to Production Org'
+            #   run: sfdx auth:sfdxurl:store -f ./SFDX_PRODUCTION_URL.txt -s -a production
+
+            # - name: 'Deploy the entire branch to Production org'
+            #   run: sfdx force:source:deploy -p force-app --testlevel RunLocalTests --json
+
+            # - name: 'Deploy destructive changes (if any) to Production org'
+            #   run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings 
