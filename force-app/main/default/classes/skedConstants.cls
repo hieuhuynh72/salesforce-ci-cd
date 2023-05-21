@@ -1,5 +1,5 @@
 public class skedConstants {
-    public static final string ACCCOUNT_SCORE_BLACKLIST = 'Do not schedule';
+    public static final string ACCCOUNT_SCORE_BLACKLIST = 'Do not schedule 1';
     public static final string ACCCOUNT_SCORE_WHITELIST = 'Preferred';
 
     public static final string AVAILABILITY_STATUS_APPROVED = 'Approved';

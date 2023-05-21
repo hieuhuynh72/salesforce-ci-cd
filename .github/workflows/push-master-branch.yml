@@ -73,10 +73,10 @@ jobs:
               run: |
                 node ./build/deploy
 
-            - name: 'Deploy destructive changes (if any) to Production org'
+            # - name: 'Deploy destructive changes (if any) to Production org'
               # run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings
-              run: |
-                node ./build/destroy
+              # run: |
+              #   node ./build/destroy
 
             # Authenticate to org
             # - name: 'Authenticate to Production Org'
