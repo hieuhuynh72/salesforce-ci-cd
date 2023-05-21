@@ -34,7 +34,8 @@
     "prettier-plugin-apex": "^1.10.0",
     "dotenv": "10.0.0",
     "cs-jsforce": "1.7.2",
-    "cs-jsforce-metadata-tools": "1.2.10"
+    "cs-jsforce-metadata-tools": "1.2.10",
+    "lodash.isempty": "4.4.0"
   },
   "lint-staged": {
     "**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}": [
