@@ -43,7 +43,7 @@ jobs:
       - name: "Populate auth file with SFDX_URL secret of the integration and staging orgs"
         shell: bash
         run: |
-          echo 'force://PlatformCLI::5Aep861D25v7ERuX69sK0hMAP1BPleKSpOHN17Wn2d5mgGazjgHn6On0puKdBO4ErSwfmC4jA3Rv_2tD6yxaVEy@cxbe01-dev-ed.develop.my.salesforce.com' > ./SFDX_PRODUCTION_URL.txt
+          echo 'force://PlatformCLI::177B7D344574489DCEA6B0FF09EA7B06CF576F71047DC2AC8F47A81FE14AF0E3@cxbe01-dev-ed.develop.my.salesforce.com' > ./SFDX_PRODUCTION_URL.txt
 
       - name: "Create delta packages for new, modified or deleted metadata"
         run: |
