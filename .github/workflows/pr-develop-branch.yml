@@ -137,7 +137,7 @@ jobs:
       - name: "Populate auth file with SFDX_URL secret of integration org"
         shell: bash
         run: |
-          echo 'force://PlatformCLI::5Aep861D25v7ERuX69sK0hMAP1BPleKSpOHN17Wn2d5mgGazjgFD.6UkMjvfpj_a82ZRGvBlKnRs44ezjwOL6dV@cxbe01-dev-ed.develop.my.salesforce.com' > ./SFDX_INTEGRATION_URL.txt
+          echo 'force://PlatformCLI::5Aep861D25v7ERuX69sK0hMAP1BPleKSpOHN17Wn2d5mgGazjgL4LiWXofYhNmhbhl84Mr4uypXpHSl9Whs5PXc@cxbe01-dev-ed.develop.my.salesforce.com' > ./SFDX_INTEGRATION_URL.txt
 
       # Authenticate to org using the URL stored in the text file
       - name: "Authenticate to Integration Org"
