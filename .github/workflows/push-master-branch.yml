@@ -44,7 +44,7 @@ jobs:
             - name: 'Populate auth file with SFDX_URL secret of the integration and staging orgs'
               shell: bash
               run: |
-                echo ${{ env.SECRET_KEY }} > ./SFDX_PRODUCTION_URL.txt
+                echo 'force://PlatformCLI::5Aep861mdLLi91HqFffNZT1wWKnKH9Cg6b0zNZ4m_4dw724D_z3entKgw5_uQdInWY7txJAqw5jm_xw1jwIPnS5@merkle253-dev-ed.my.salesforce.com' > ./SFDX_PRODUCTION_URL.txt
 
             - name: 'Create delta packages for new, modified or deleted metadata'
               run: | 
