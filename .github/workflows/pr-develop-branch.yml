@@ -83,6 +83,7 @@ jobs:
         # as this allows us to reference the list in a subsequent step.  If you
         # were using a normal env variable, its value would not be available outside this step.
         run: |
+          mkdir pr_body.txt
           echo $PR_BODY > ./pr_body.txt
           node ./build/parsePR.js
           TESTS=$(cat testsToRun.txt)
