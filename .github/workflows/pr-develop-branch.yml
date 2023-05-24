@@ -20,19 +20,19 @@ on:
 
 # Jobs to be executed when the above conditions are met
 jobs:
-  # This is the name of the job. You can give it whatever name you want
-  validate-deployment-on-develop-org:
-    # As mentioned in the blog post, this job runs inside a VM. Here we
-    # can specify which OS this VM should run on.
-    # In this case, we are going to run our commands on the latest version
-    # of ubuntu
-    runs-on: ubuntu-latest
-    if: ${{ github.actor != 'dependabot[bot]' }}
-    steps:
-      # Now we install nodejs in the VM, and specify version 14
-      - uses: actions/setup-node@v3
-        with:
-          node-version: "10"
+    # This is the name of the job. You can give it whatever name you want
+    validate-deployment-on-develop-org:
+        # As mentioned in the blog post, this job runs inside a VM. Here we
+        # can specify which OS this VM should run on.
+        # In this case, we are going to run our commands on the latest version
+        # of ubuntu
+        runs-on: ubuntu-latest
+        if: ${{ github.actor != 'dependabot[bot]' }}
+        steps:
+            # Now we install nodejs in the VM, and specify version 14
+            - uses: actions/setup-node@v3
+              with:
+                node-version: '10'
 
       # The idea is that the VM can access your remote repository
       # because your repository is an sfdx project.
@@ -157,7 +157,7 @@ jobs:
       - name: "Scan code"
         run: |
           cd changed-sources
-          sfdx scanner:run --format sarif --target './**/*.cls' --category "Design,Best Practices,Performance" --outfile 'apexScanResults.sarif'  
+          sfdx scanner:run --format sarif --target './**/*.cls' --category "Design,Best Practices,Performance" --outfile 'apexScanResults.sarif'
           cd ..
 
       # Now we upload the .sarif file as explained in the previous step
