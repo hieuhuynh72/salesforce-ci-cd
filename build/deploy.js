@@ -75,53 +75,50 @@ if (isProduction) {
 
 // options.username = process.env[branch.toUpperCase() + '_USERNAME'] || process.env[branch + '_USERNAME'];
 // options.password = process.env[branch.toUpperCase() + '_PASSWD'] || process.env[branch + '_PASSWD'];
-options.username = 'baohieu08@gmail.com';
-options.password = 'hjn3ZWR-xbm-ctz-zrq';
+options.username = 'cxbe01@skedulo.com.dev';
+options.password = 'JA8HL9QjHdkGE4QoduE9';
 
 console.info('Username: ', options.username);
 console.info('Password: ', options.password);
 console.info('LoginUrl: ', options.loginUrl);
 
-// hasDestructivePhase()
-// .then((destroyFile) => {
-//     var deployWithTest = isProduction
-//         || branch === 'develop'
-//         || branch === 'hotfix_sandbox'
-//         || !destroyFile;
+hasDestructivePhase()
+    .then((destroyFile) => {
+        var deployWithTest = isProduction || branch === 'develop' || branch === 'hotfix_sandbox' || !destroyFile;
 
-//     if (deployWithTest) {
-//         console.info(`On '${branch}' branch. Apex tests will be executed.`);
-//     } else {
-//         console.info(`On '${branch}' branch. ALL Apex tests are skipped now and executed in destroy phase.`);
-//         options.testLevel = 'NoTestRun';
-//     }
+        if (deployWithTest) {
+            console.info(`On '${branch}' branch. Apex tests will be executed.`);
+        } else {
+            console.info(`On '${branch}' branch. ALL Apex tests are skipped now and executed in destroy phase.`);
+            options.testLevel = 'NoTestRun';
+        }
 
-//     return Promise.resolve(true);
-// })
-// .then(() => {
-//     console.info('Start to deploy...');
-//     return tools.deployFromDirectory('./force-app', options);
-// })
-// .then((deployResult) => {
-//     tools.reportDeployResult(deployResult, logger, options.verbose);
-//     logger.flush();
+        return Promise.resolve(true);
+    })
+    .then(() => {
+        console.info('Start to deploy...');
+        return tools.deployFromDirectory('./force-app', options);
+    })
+    .then((deployResult) => {
+        tools.reportDeployResult(deployResult, logger, options.verbose);
+        logger.flush();
 
-//     console.log('Deployment Id: ' + deployResult.id);
+        console.log('Deployment Id: ' + deployResult.id);
 
-//     if (!deployResult.success || deployResult.numberTestErrors > 0 || deployResult.numberComponentErrors > 0) {
-//         console.error('Deploy was NOT Successful');
-//         return Promise.reject('Deploy was NOT Successful');
-//     } else {
-//         console.log('Deploy was Successful');
-//         Promise.resolve(true);
-//     }
-// })
-// .then(() => {
-//     return Promise.resolve(true);
-// })
-// .catch(function (err) {
-//     console.error(err.message);
-//     process.exit(1);
-// });
-console.info('Start to deploy...');
-tools.deployFromDirectory('../force-app', options);
+        if (!deployResult.success || deployResult.numberTestErrors > 0 || deployResult.numberComponentErrors > 0) {
+            console.error('Deploy was NOT Successful');
+            return Promise.reject('Deploy was NOT Successful');
+        } else {
+            console.log('Deploy was Successful');
+            Promise.resolve(true);
+        }
+    })
+    .then(() => {
+        return Promise.resolve(true);
+    })
+    .catch(function (err) {
+        console.error(err.message);
+        process.exit(1);
+    });
+// console.info("Start to deploy...");
+// tools.deployFromDirectory("../force-app", options);
