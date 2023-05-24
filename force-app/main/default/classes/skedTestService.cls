@@ -3,5 +3,6 @@ public with sharing class skedTestService {
     public skedTestService() {
         String test = 'Test';
         String test2 = 'Test2';
+        String test3 = 'Test3';
     }
 }
