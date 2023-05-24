@@ -1,5 +1,5 @@
 # Unique name for this workflow
-name: Deploy master branch to production org
+name: Deploy test branch to production org
 
 # Definition when the workflow should run
 on:
@@ -8,7 +8,7 @@ on:
       session_id:
         required: true
   push:
-    branches: [feature/authorize-by-username-&-password]
+    branches: [feature/authorize-by-username]
     paths:
       - "force-app/**"
 
