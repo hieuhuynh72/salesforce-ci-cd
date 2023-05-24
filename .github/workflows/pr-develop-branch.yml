@@ -22,6 +22,19 @@ on:
 # Jobs to be executed when the above conditions are met
 jobs:
     # This is the name of the job. You can give it whatever name you want
+    check-commit-message:
+       name: Check PR and Commit message
+       runs-on: ubuntu-latest
+       steps:
+         - name: Check for JIRA issue in PR
+           uses: gsactions/commit-message-checker@v2
+           with:
+             pattern: "^[A-Z]+-[0-9]+"
+             flags: "gm"
+             error: "Your commit subjects and PR title must contain a JIRA issue ID"
+             checkAllCommitMessages: true
+             accessToken: ${{ secrets.TOKEN_GITHUB }}
+             excludeDescription: true
     validate-deployment-on-develop-org:
         # As mentioned in the blog post, this job runs inside a VM. Here we
         # can specify which OS this VM should run on. 
