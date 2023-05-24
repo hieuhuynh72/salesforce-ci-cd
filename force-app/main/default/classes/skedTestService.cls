@@ -1,8 +1,7 @@
 public with sharing class skedTestService {
-  @TestVisible
-  public skedTestService() {
-    String test = 'Test';
-    // ajflkjslagh
-    System.debug(2);
-  }
+    @TestVisible
+    public skedTestService() {
+        String test = 'Test';
+        String test2 = 'Test2';
+    }
 }
