@@ -89,6 +89,16 @@ jobs:
 
       - name: "Deploy the entire branch to Production org"
         run: sfdx force:source:deploy -p force-app --testlevel RunLocalTests --json
+      
+       #create tag
+      - name: Generate Tag
+        id: tag
+        run: |
+          DATE=$(date +"%y-%m-%d-%HH:%M")
+          TAG="$DATE"
+          echo "::set-output name=TAG::$TAG"
 
-      - name: "Deploy destructive changes (if any) to Production org"
-        run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings
+      - name: Create and push tag
+        run: |
+          git tag -a ${{ steps.tag.outputs.TAG }} -m "Auto-generated tag: ${{ steps.tag.outputs.TAG }}"
+          git push origin ${{ steps.tag.outputs.TAG }}
