@@ -89,7 +89,7 @@ jobs:
             - name: Generate Tag
               id: tag
               run: |
-                  DATE=$(date +"%y-%m-%d-%HH:%M")
+                  DATE=$(date +"%y-%m-%d-%HH-%MM")
                   TAG="$DATE"
                   echo "::set-output name=TAG::$TAG"
 
