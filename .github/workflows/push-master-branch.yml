@@ -59,13 +59,18 @@ jobs:
             # - name: 'Authenticate to Production Org'
             #   run: sfdx auth:sfdxurl:store -f ./SFDX_PRODUCTION_URL.txt -s -a production
 
-            # - uses: actions/setup-node@v3
-            #   with:
-            #     node-version: '10'
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: '10'
 
-            # - name: 'Install npm'
-            #   run: |
-            #     npm install
+            - name: 'Install npm'
+              run: |
+                  npm install
+
+            - uses: bahmutov/npm-install@v1
+              with:
+                  useLockFile: true
+            - run: npm run prettier
 
             # - name: 'Deploy the entire branch to Production org'
             #   # run: sfdx force:source:deploy -p force-app --testlevel RunLocalTests --json
@@ -76,9 +81,6 @@ jobs:
             # run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings
             # run: |
             #   node ./build/destroy
-
-            - name: 'Run Prettier'
-              run: npm run prettier
 
             #Authenticate to org
             - name: 'Authenticate to Production Org'
