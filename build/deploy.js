@@ -75,8 +75,8 @@ if (isProduction) {
 
 // options.username = process.env[branch.toUpperCase() + '_USERNAME'] || process.env[branch + '_USERNAME'];
 // options.password = process.env[branch.toUpperCase() + '_PASSWD'] || process.env[branch + '_PASSWD'];
-options.username = 'baohieu08@gmail.com';
-options.password = 'hjn3ZWR-xbm-ctz-zrq';
+options.username = 'cxbe01@skedulo.com.dev';
+options.password = 'JA8HL9QjHdkGE4QoduE9';
 
 console.info('Username: ', options.username);
 console.info('Password: ', options.password);
