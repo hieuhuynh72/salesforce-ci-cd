@@ -71,10 +71,7 @@ jobs:
             - uses: bahmutov/npm-install@v1
               with:
                   useLockFile: true
-            - run: npm run apex-prettier
-            - uses: stefanzweifel/git-auto-commit-action@v4.1.6
-              with:
-                  commit_message: Apply apex-prettier changes
+            - run: npm run prettier
 
             # Now, we need a way to let the developer specify which tests to run, which
             # could be all tests or just the tests relevant to their deployment.
