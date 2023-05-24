@@ -77,9 +77,6 @@ jobs:
             # run: |
             #   node ./build/destroy
 
-            - name: 'Run Prettier'
-              run: npm run prettier
-
             #Authenticate to org
             - name: 'Authenticate to Production Org'
               run: sfdx auth:sfdxurl:store -f ./SFDX_PRODUCTION_URL.txt -s -a production
