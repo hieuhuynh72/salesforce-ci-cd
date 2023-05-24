@@ -21,18 +21,35 @@ on:
 # Jobs to be executed when the above conditions are met
 jobs:
   # This is the name of the job. You can give it whatever name you want
+  check-commit-message:
+      name: Check PR and Commit message
+      runs-on: ubuntu-latest
+      steps:
+        - name: Check for JIRA issue in PR
+          uses: gsactions/commit-message-checker@v2
+          with:
+            pattern: "^[A-Z]+-[0-9]+"
+            flags: "gm"
+            error: "Your commit subjects and PR title must contain a JIRA issue ID"
+            checkAllCommitMessages: true
+            accessToken: ${{ secrets.TOKEN_GITHUB }}
+            excludeDescription: true
   validate-deployment-on-develop-org:
     # As mentioned in the blog post, this job runs inside a VM. Here we
     # can specify which OS this VM should run on.
     # In this case, we are going to run our commands on the latest version
     # of ubuntu
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
     if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
       # Now we install nodejs in the VM, and specify version 14
       - uses: actions/setup-node@v3
         with:
-          node-version: "10"
+          node-version: "14"
 
       # The idea is that the VM can access your remote repository
       # because your repository is an sfdx project.
@@ -83,9 +100,8 @@ jobs:
         # as this allows us to reference the list in a subsequent step.  If you
         # were using a normal env variable, its value would not be available outside this step.
         run: |
-          mkdir pr_body.txt
           echo $PR_BODY > ./pr_body.txt
-          node ./build/parsePR.js
+          node ./parsePR.js
           TESTS=$(cat testsToRun.txt)
           echo "APEX_TESTS=$TESTS" >> $GITHUB_ENV
 
@@ -134,7 +150,7 @@ jobs:
       - name: "Populate auth file with SFDX_URL secret of integration org"
         shell: bash
         run: |
-          echo ${{ secrets.SFDX_INTEGRATION_URL}} > ./SFDX_INTEGRATION_URL.txt
+          echo 'force://PlatformCLI::5Aep861D25v7ERuX69sK0hMAP1BPleKSpOHN17Wn2d5mgGazjgL4LiWXofYhNmhbhl84Mr4uypXpHSl9Whs5PXc@cxbe01-dev-ed.develop.my.salesforce.com' > ./SFDX_INTEGRATION_URL.txt
 
       # Authenticate to org using the URL stored in the text file
       - name: "Authenticate to Integration Org"
