@@ -5,6 +5,6 @@ public with sharing class skedHackathonTest {
         Test.startTest();
         skedHackathonController testService = new skedHackathonController();
         Test.stopTest();
-        // Feature_PR
+        // Test Push QA org
     }
 }
