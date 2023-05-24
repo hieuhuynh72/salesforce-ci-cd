@@ -95,5 +95,7 @@ jobs:
 
             - name: Create and push tag
               run: |
+                  git config --global user.email "dhuynh@skedulo.com"
+                  git config --global user.name "Dang Huynh"
                   git tag -a ${{ steps.tag.outputs.TAG }} -m "Auto-generated tag: ${{ steps.tag.outputs.TAG }}"
                   git push origin ${{ steps.tag.outputs.TAG }}
