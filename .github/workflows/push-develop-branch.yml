@@ -1,13 +1,12 @@
 # Unique name for this workflow
-name: Deploy integration branch to integration and staging/uat orgs
+name: Deploy develop branch to develop and staging/uat orgs
 
 # Definition when the workflow should run
 on:
     push:
-      branches: [ integration ]
-      paths:
-        - 'force-app/**'
-            
+        branches: [develop]
+        paths:
+            - 'force-app/**'
 
 # Jobs to be executed
 jobs:
@@ -26,15 +25,15 @@ jobs:
 
             # install SFDX-Git-Delta plugin - https://github.com/scolladon/sfdx-git-delta
             - name: 'Installing sfdx git delta'
-              run: | 
+              run: |
                   echo y | sfdx plugins:install sfdx-git-delta
-                  sfdx plugins 
+                  sfdx plugins
 
             # Checkout the source code
             - name: 'Checkout source code'
               uses: actions/checkout@v3
               with:
-                fetch-depth: 0
+                  fetch-depth: 0
 
             # Store secret for both otgs
             - name: 'Populate auth file with SFDX_URL secret of the integration and staging orgs'
@@ -44,7 +43,7 @@ jobs:
                   echo ${{ secrets.SFDX_STAGING_URL}} > ./SFDX_STAGING_URL.txt
 
             - name: 'Create delta packages for new, modified or deleted metadata'
-              run: | 
+              run: |
                   mkdir changed-sources
                   sfdx sgd:source:delta --to "HEAD" --from "HEAD^" --output changed-sources/ --generate-delta --source force-app/
 
@@ -56,7 +55,7 @@ jobs:
               run: sfdx force:source:deploy -p force-app --testlevel RunLocalTests --json
 
             - name: 'Deploy destructive changes (if any) to Integration org'
-              run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings 
+              run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings
 
             # Authenticate to org
             - name: 'Authenticate to Staging Org to Staging org'
@@ -65,5 +64,5 @@ jobs:
             - name: 'Deploy the entire branch'
               run: sfdx force:source:deploy -p force-app --testlevel RunLocalTests --json
 
-            - name: 'Deploy destructive changes (if any) to Staging org'
-              run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings
+            # - name: "Deploy destructive changes (if any) to Staging org"
+            #   run: sfdx force:mdapi:deploy -d "changed-sources/destructiveChanges" --checkonly --ignorewarnings

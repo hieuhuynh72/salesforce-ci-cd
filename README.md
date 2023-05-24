@@ -1,3 +1,3 @@
 # Setup:
-- sfdx force:auth:web:login -a OrgAlias
 
+-   sfdx force:auth:web:login -a OrgAlias
