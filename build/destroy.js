@@ -18,14 +18,14 @@ var hasDestructivePhase = require('./destructivePhase');
 //     pollInterval [pollInterval]  Polling interval in millisec (default is 5000ms)
 //     verbose                      Output execution detail log
 var options = {
-    loginUrl: "https://login.salesforce.com",
+    loginUrl: 'https://login.salesforce.com',
     checkOnly: false,
     testLevel: 'RunLocalTests',
-    ignoreWarnings : true,
+    ignoreWarnings: true,
     pollTimeout: 7200000,
     pollInterval: 15000,
-    rollbackOnError : true,
-    verbose : true
+    rollbackOnError: true,
+    verbose: true
 };
 
 var logger = (function (fs) {
@@ -35,20 +35,20 @@ var logger = (function (fs) {
         flush: flush
     };
     function log(val) {
-        buffer += (val + '\n');
+        buffer += val + '\n';
     }
     function flush() {
         var logFile = path.resolve((process.env.SALESFORCE_ARTIFACTS || '.') + '/DeployStatistics.log');
         fs.appendFileSync(logFile, buffer, 'utf8');
         buffer = '';
     }
-} (fs));
+})(fs);
 
 var branch = process.env['SF_BRANCH'];
 console.info('Branch Name:', branch);
 
-const isProduction = branch === 'master';  
- 
+const isProduction = branch === 'master';
+
 if (isProduction) {
     console.info(`On '${branch}' branch represents production. Leaving loginUrl as-is.`);
 } else if (branch === 'develop') {
@@ -56,7 +56,7 @@ if (isProduction) {
     return;
 } else {
     console.info(`On '${branch}' branch, updating loginUrl for Sandbox.`);
-    options.loginUrl = 'https://test.salesforce.com';        
+    options.loginUrl = 'https://test.salesforce.com';
 }
 
 options.username = process.env[branch.toUpperCase() + '_USERNAME'] || process.env[branch + '_USERNAME'];
@@ -67,17 +67,20 @@ console.info('Password: ', 'hidden for your safety');
 console.info('LoginUrl: ', options.loginUrl);
 
 hasDestructivePhase()
-.then((fileContent) => {
-    if (fileContent) {
-        var artifacts =  path.resolve((process.env.SALESFORCE_ARTIFACTS || '.') + '/destructiveChanges.xml');
-        fs.writeFileSync(artifacts, fileContent);
+    .then((fileContent) => {
+        if (fileContent) {
+            var artifacts = path.resolve((process.env.SALESFORCE_ARTIFACTS || '.') + '/destructiveChanges.xml');
+            fs.writeFileSync(artifacts, fileContent);
 
-        console.info('Start to deploy...');
-        return tools.deployFromDirectory('./build/destroy', options)
-            .then((deployResult) => {
+            console.info('Start to deploy...');
+            return tools.deployFromDirectory('./build/destroy', options).then((deployResult) => {
                 tools.reportDeployResult(deployResult, logger, options.verbose);
                 logger.flush();
-                if (!deployResult.success || deployResult.numberTestErrors > 0 || deployResult.numberComponentErrors > 0) {
+                if (
+                    !deployResult.success ||
+                    deployResult.numberTestErrors > 0 ||
+                    deployResult.numberComponentErrors > 0
+                ) {
                     console.error('Destructive changes were NOT Successful');
                     return Promise.reject('Destructive changes were NOT Successful');
                 } else {
@@ -86,13 +89,12 @@ hasDestructivePhase()
                     Promise.resolve(true);
                 }
             });
-    } else {
-        console.log('No destroy phase to build. Have some candies yourself.');
-        return Promise.resolve(false);
-    }
-})
-.catch(function (err) {
-    console.error(err.message);
-    process.exit(1);
-});     
-
+        } else {
+            console.log('No destroy phase to build. Have some candies yourself.');
+            return Promise.resolve(false);
+        }
+    })
+    .catch(function (err) {
+        console.error(err.message);
+        process.exit(1);
+    });
