@@ -28,7 +28,7 @@ jobs:
             - name: Check for JIRA issue in PR
               uses: gsactions/commit-message-checker@v2
               with:
-                  pattern: '^[A-Z]+-[0-9]+i'
+                  pattern: '^[a-zA-Z]+-[0-9]+i'
                   flags: 'gm'
                   error: 'Your commit subjects and PR title must contain a JIRA issue ID'
                   checkAllCommitMessages: true
