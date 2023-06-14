@@ -4,7 +4,7 @@ name: Validate PR on develop branch
 # Definition when the workflow should run
 on:
     # The workflow will run whenever an event happens on a pull request
-    pull_request:
+    pull_request_target:
         # The events are that a PR is opened, or when a commit is pushed
         # to a branch that has an existing pull request
         types: [opened, synchronize]
@@ -21,6 +21,18 @@ on:
 # Jobs to be executed when the above conditions are met
 jobs:
     # This is the name of the job. You can give it whatever name you want
+    check-pr-title:
+        name: Check PR title
+        runs-on: ubuntu-latest
+        steps:
+          - name: Validate PR Title
+            run: |
+              regex_pattern="^[A-Za-z]+-[0-9]+"
+              if [[ ! "${{ github.event.pull_request.title }}" =~ $regex_pattern ]]; then
+                echo "Invalid PR title format. Please follow the pattern: <prefix>-<number>"
+                exit 1
+              fi
+        
     check-commit-message:
         name: Check PR and Commit message
         runs-on: ubuntu-latest
@@ -28,7 +40,7 @@ jobs:
             - name: Check for JIRA issue in PR
               uses: gsactions/commit-message-checker@v2
               with:
-                  pattern: '^[A-Z]+-[0-9]+'
+                  pattern: '^[a-zA-Z]+-[0-9]+'
                   flags: 'gm'
                   error: 'Your commit subjects and PR title must contain a JIRA issue ID'
                   checkAllCommitMessages: true
